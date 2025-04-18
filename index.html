@@ -211,12 +211,10 @@
       const answer = document.getElementById(`answer${cardId}`);
       answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
       
-      // Toggle animation
       const flashcard = event.currentTarget;
       flashcard.style.transform = answer.style.display === 'block' ? 'scale(1.02)' : 'scale(1)';
     }
-    
-    // Add event listener for audio error handling
+
     document.querySelector('audio').addEventListener('error', function() {
       console.error('Error loading audio file');
       alert('Having trouble loading the podcast. Please try downloading it instead.');
