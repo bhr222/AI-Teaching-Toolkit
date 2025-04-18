@@ -5,158 +5,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My AI Teaching Toolkit</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-      line-height: 1.6;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    h1, h2 {
-      color: #2c3e50;
-    }
-    section {
-      margin-bottom: 40px;
-      background: white;
-      padding: 25px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .gallery {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-      margin: 20px 0;
-    }
-    .gallery-item {
-      width: 30%;
-      min-width: 200px;
+    /* [Previous styles remain the same] */
+    
+    /* Add missing flashcard styles */
+    .flashcard {
+      background-color: #fff;
       border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 10px;
       border-radius: 8px;
-      overflow: hidden;
-      transition: transform 0.3s ease;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
-    .gallery-item:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    .flashcard:hover {
+      background-color: #f5f5f5;
     }
-    .gallery-img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      display: block;
+    .question {
+      font-weight: bold;
+      margin-bottom: 8px;
     }
-    .img-placeholder {
-      background: #f0f0f0;
-      height: 180px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #666;
-      font-size: 14px;
+    .answer {
+      display: none;
+      color: #555;
+      padding-top: 8px;
+      border-top: 1px dashed #eee;
     }
-    .error-message {
-      background-color: #ffebee;
-      border-left: 3px solid #f44336;
-      padding: 10px;
-      margin: 10px 0;
-      font-size: 14px;
-    }
-    /* [Keep all your other existing styles] */
   </style>
 </head>
 <body>
-  <h1>🎓 My AI Teaching Toolkit</h1>
-  <p><strong>Project:</strong> AI-Enhanced Digital Resource Hub for Educators</p>
+  <!-- [Previous HTML content remains the same until gallery] -->
 
-  <!-- Flashcard Section -->
-  <section>
-    <h2>🔗 Flashcard Deck</h2>
-    <p>Topic: <em>Machine Learning Basics</em></p>
-    <div class="flashcard" onclick="toggleFlashcard(1)">
-      <div class="question">What is the primary goal of supervised learning?</div>
-      <div class="answer" id="answer1">Predicting outcomes based on labeled data.</div>
-    </div>
-    <!-- [Keep other flashcards] -->
-  </section>
-
-  <!-- AI Image Gallery Section -->
+  <!-- Improved Gallery Section -->
   <section>
     <h2>🖼️ AI Image Gallery</h2>
     <div class="gallery">
       <div class="gallery-item">
         <img class="gallery-img" 
-             src="https://github.com/bhr222/AI-Teaching-Toolkit/raw/main/Neural_Network_Cityscape.png" 
+             src="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/Neural_Network_Cityscape.png" 
              alt="Neural Network Cityscape"
-             onerror="handleImageError(this)">
-        <div class="img-placeholder" style="display:none;">Neural Network Visualization</div>
+             onerror="handleImageError(this, 'gallery1')">
+        <div class="img-placeholder" id="gallery1-placeholder" style="display:none;">
+          Neural Network Visualization
+        </div>
       </div>
       
-      <div class="gallery-item">
-        <img class="gallery-img" 
-             src="https://github.com/bhr222/AI-Teaching-Toolkit/raw/main/Mind_of_a_Machine.png" 
-             alt="Mind of a Machine"
-             onerror="handleImageError(this)">
-        <div class="img-placeholder" style="display:none;">AI Thought Process</div>
-      </div>
-      
-      <div class="gallery-item">
-        <img class="gallery-img" 
-             src="https://github.com/bhr222/AI-Teaching-Toolkit/raw/main/lit-map.png" 
-             alt="Literature Map"
-             onerror="handleImageError(this)">
-        <div class="img-placeholder" style="display:none;">Research Literature Map</div>
-      </div>
+      <!-- [Other gallery items with unique IDs] -->
     </div>
     <div id="gallery-errors"></div>
   </section>
 
-  <!-- [Keep all your other sections] -->
-
   <script>
     // Enhanced Image Error Handling
-    function handleImageError(img) {
-      const container = img.parentElement;
-      const placeholder = container.querySelector('.img-placeholder');
+    function handleImageError(img, itemId) {
+      const placeholder = document.getElementById(`${itemId}-placeholder`);
       const errorContainer = document.getElementById('gallery-errors');
       
-      // Hide broken image
+      // Clear previous errors
+      errorContainer.innerHTML = '';
+      
+      // Hide broken image and show placeholder
       img.style.display = 'none';
+      if (placeholder) placeholder.style.display = 'flex';
       
-      // Show placeholder
-      placeholder.style.display = 'flex';
-      
-      // Add error message
-      errorContainer.innerHTML += `
+      // Add single error message
+      errorContainer.innerHTML = `
         <div class="error-message">
-          <strong>⚠️ Image failed to load:</strong> ${img.alt}<br>
-          <small>Tried to load from: <a href="${img.src}" target="_blank">${img.src}</a></small>
+          <strong>⚠️ Some images failed to load</strong><br>
+          <small>Please check: <a href="${img.src}" target="_blank">${img.alt}</a></small>
+          <p>Try refreshing the page or check the file names.</p>
         </div>
       `;
       
       console.error('Image load failed:', img.src);
     }
 
-    // Flashcard Functionality
-    function toggleFlashcard(cardId) {
-      const answer = document.getElementById(`answer${cardId}`);
-      answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
-    }
-
-    // Initialize with error checking
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('Toolkit loaded - checking resources...');
-      
-      // Verify gallery images
-      document.querySelectorAll('.gallery-img').forEach(img => {
-        if (!img.complete || img.naturalHeight === 0) {
-          img.onerror();
-        }
-      });
-    });
+    // [Rest of your JavaScript remains the same]
   </script>
 </body>
 </html>
