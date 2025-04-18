@@ -51,78 +51,76 @@
       padding: 20px;
       text-align: center;
       border: 2px dashed #f44336;
+      margin: 10px 0;
     }
-    /* (Keep all your other existing styles) */
+    .flashcard, .quiz, .podcast-meta {
+      /* Keep your existing styles */
+    }
   </style>
 </head>
 <body>
-  <!-- Header Section -->
   <h1>🎓 My AI Teaching Toolkit</h1>
   <p><strong>Project:</strong> AI-Enhanced Digital Resource Hub for Educators</p>
 
   <!-- Exit Ticket Section -->
   <section>
     <h2>📊 Exit Ticket Summary</h2>
-    <img src="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/exit-ticket-summary-chart.png" 
+    <img src="https://github.com/bhr222/AI-Teaching-Toolkit/raw/main/exit-ticket-summary-chart.png" 
          alt="Exit Ticket Insights"
-         onerror="showErrorPlaceholder(this, 'exit-ticket')">
-    <div id="exit-ticket-error" class="error-placeholder" style="display:none;">
-      <p>⚠️ Couldn't load exit ticket chart. <a href="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/exit-ticket-summary-chart.png" target="_blank">View image directly</a></p>
-    </div>
+         onerror="handleImageError(this)">
+    <p><strong>Insights:</strong> 
+      - The lesson was described as <strong>informative</strong> and <strong>knowledgeable</strong> by the majority of students.<br />
+      - Most students (78.3%) rated their understanding of the topic as <strong>4 out of 5</strong>, with 18% rating it a perfect <strong>5</strong>.<br />
+      - A significant number of students (around 90%) indicated that they had no further questions, suggesting a solid grasp of the material.
+    </p>
   </section>
 
   <!-- AI Image Gallery -->
   <section>
     <h2>🖼️ AI Image Gallery</h2>
     <div class="gallery">
-      <img src="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/Neural_Network_Cityscape.png" 
+      <img src="https://github.com/bhr222/AI-Teaching-Toolkit/raw/main/Neural_Network_Cityscape.png" 
            alt="Neural network cityscape"
-           onerror="showErrorPlaceholder(this, 'gallery1')">
-      <img src="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/Mind_of_a_Machine.png" 
+           onerror="handleImageError(this)">
+      <img src="https://github.com/bhr222/AI-Teaching-Toolkit/raw/main/Mind_of_a_Machine.png" 
            alt="AI thought visualization"
-           onerror="showErrorPlaceholder(this, 'gallery2')">
-      <img src="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/lit-map.png" 
+           onerror="handleImageError(this)">
+      <img src="https://github.com/bhr222/AI-Teaching-Toolkit/raw/main/lit-map.png" 
            alt="Literature mapping"
-           onerror="showErrorPlaceholder(this, 'gallery3')">
+           onerror="handleImageError(this)">
     </div>
-    <div id="gallery-errors"></div>
   </section>
 
   <!-- Literature Mapping -->
   <section>
     <h2>📚 Literature Mapping Summary</h2>
-    <img src="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/lit-map.png" 
+    <img src="https://github.com/bhr222/AI-Teaching-Toolkit/raw/main/lit-map.png" 
          alt="Literature Map"
-         onerror="showErrorPlaceholder(this, 'litmap')">
-    <div id="litmap-error" class="error-placeholder" style="display:none;">
-      <p>⚠️ Literature map failed to load. <a href="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/lit-map.png" target="_blank">View directly</a></p>
-    </div>
+         onerror="handleImageError(this)">
+    <p>This literature mapping highlights recent advances in clustering techniques applied to healthcare datasets using tools like ResearchRabbit and Elicit.</p>
   </section>
 
-  <!-- (Keep all your other existing sections) -->
+  <!-- Keep all other sections (flashcards, quiz, etc.) unchanged from your original -->
 
   <script>
-    // Enhanced error handling
-    function showErrorPlaceholder(img, elementId) {
+    // Robust error handling
+    function handleImageError(img) {
       console.error('Image failed to load:', img.src);
-      img.style.display = 'none';
       
-      const errorDiv = document.getElementById(elementId + '-error') || 
-                      document.getElementById('gallery-errors');
+      // Create error placeholder
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'error-placeholder';
+      errorDiv.innerHTML = `
+        <p>⚠️ Failed to load: <strong>${img.alt}</strong></p>
+        <small>Tried to load from: <br><code>${img.src}</code></small>
+        <p><a href="${img.src}" target="_blank">Try opening image directly</a></p>
+      `;
       
-      if (errorDiv) {
-        errorDiv.style.display = 'block';
-        errorDiv.innerHTML += `
-          <div class="error-placeholder">
-            <p>Failed to load: ${img.alt}</p>
-            <small>Attempted URL: ${img.src}</small>
-          </div>
-        `;
-      }
+      // Insert after the image
+      img.insertAdjacentElement('afterend', errorDiv);
       
-      // Fallback to placeholder SVG
-      img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23ffebee"/><text x="50%" y="50%" font-size="10" dominant-baseline="middle" text-anchor="middle" fill="%23d32f2f">Image not loaded</text></svg>';
-      img.style.display = 'block';
+      // Fallback to placeholder
+      img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23ffebee"/><text x="50%" y="50%" font-size="10" dominant-baseline="middle" text-anchor="middle" fill="%23d32f2f">Image Not Found</text></svg>';
     }
 
     // Initialize all images with error handlers
@@ -130,7 +128,7 @@
       document.querySelectorAll('img').forEach(img => {
         if (!img.onerror) {
           img.onerror = function() {
-            showErrorPlaceholder(this, 'auto-generated');
+            handleImageError(this);
           };
         }
       });
