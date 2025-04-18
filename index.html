@@ -5,81 +5,171 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My AI Teaching Toolkit</title>
   <style>
-    /* [Previous styles remain the same] */
+    /* [Keep all your existing styles] */
     
-    /* Add missing flashcard styles */
-    .flashcard {
-      background-color: #fff;
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .gallery-item {
+      width: 30%;
+      min-width: 200px;
       border: 1px solid #ddd;
-      padding: 15px;
-      margin-bottom: 10px;
       border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      position: relative;
     }
-    .flashcard:hover {
-      background-color: #f5f5f5;
+    .gallery-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
     }
-    .question {
-      font-weight: bold;
-      margin-bottom: 8px;
+    .img-fallback {
+      width: 100%;
+      height: 180px;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: 14px;
     }
-    .answer {
-      display: none;
-      color: #555;
-      padding-top: 8px;
-      border-top: 1px dashed #eee;
+    .error-badge {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: #f44336;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
     }
   </style>
 </head>
 <body>
-  <!-- [Previous HTML content remains the same until gallery] -->
+  <!-- [Keep your header and other sections] -->
 
-  <!-- Improved Gallery Section -->
+  <!-- AI Image Gallery Section -->
   <section>
     <h2>🖼️ AI Image Gallery</h2>
     <div class="gallery">
-      <div class="gallery-item">
+      <!-- Image 1 with multiple fallbacks -->
+      <div class="gallery-item" id="gallery-item-1">
+        <!-- Primary Source -->
         <img class="gallery-img" 
              src="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/Neural_Network_Cityscape.png" 
-             alt="Neural Network Cityscape"
-             onerror="handleImageError(this, 'gallery1')">
-        <div class="img-placeholder" id="gallery1-placeholder" style="display:none;">
-          Neural Network Visualization
+             alt="Neural Network Visualization"
+             onerror="fallbackImage(this, 1)">
+        
+        <!-- Secondary Fallback -->
+        <img class="gallery-img" 
+             style="display:none" 
+             src="Neural_Network_Cityscape.png" 
+             alt="Neural Network Visualization"
+             onerror="finalFallback(this, 1)">
+        
+        <!-- Final Fallback -->
+        <div class="img-fallback" id="fallback-1" style="display:none">
+          <span>Neural Network Visualization</span>
+          <div class="error-badge">!</div>
         </div>
       </div>
       
-      <!-- [Other gallery items with unique IDs] -->
+      <!-- Image 2 with multiple fallbacks -->
+      <div class="gallery-item" id="gallery-item-2">
+        <img class="gallery-img" 
+             src="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/Mind_of_a_Machine.png" 
+             alt="AI Thought Process"
+             onerror="fallbackImage(this, 2)">
+        <img class="gallery-img" 
+             style="display:none" 
+             src="Mind_of_a_Machine.png" 
+             alt="AI Thought Process"
+             onerror="finalFallback(this, 2)">
+        <div class="img-fallback" id="fallback-2" style="display:none">
+          <span>AI Thought Process</span>
+          <div class="error-badge">!</div>
+        </div>
+      </div>
+      
+      <!-- Image 3 with multiple fallbacks -->
+      <div class="gallery-item" id="gallery-item-3">
+        <img class="gallery-img" 
+             src="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/lit-map.png" 
+             alt="Literature Mapping"
+             onerror="fallbackImage(this, 3)">
+        <img class="gallery-img" 
+             style="display:none" 
+             src="lit-map.png" 
+             alt="Literature Mapping"
+             onerror="finalFallback(this, 3)">
+        <div class="img-fallback" id="fallback-3" style="display:none">
+          <span>Literature Mapping</span>
+          <div class="error-badge">!</div>
+        </div>
+      </div>
     </div>
-    <div id="gallery-errors"></div>
   </section>
 
   <script>
-    // Enhanced Image Error Handling
-    function handleImageError(img, itemId) {
-      const placeholder = document.getElementById(`${itemId}-placeholder`);
-      const errorContainer = document.getElementById('gallery-errors');
+    // Three-stage fallback system
+    function fallbackImage(failedImg, imgNum) {
+      console.warn(`Primary image failed, trying fallback (Image ${imgNum})`);
       
-      // Clear previous errors
-      errorContainer.innerHTML = '';
+      // Hide the failed image
+      failedImg.style.display = 'none';
       
-      // Hide broken image and show placeholder
-      img.style.display = 'none';
-      if (placeholder) placeholder.style.display = 'flex';
-      
-      // Add single error message
-      errorContainer.innerHTML = `
-        <div class="error-message">
-          <strong>⚠️ Some images failed to load</strong><br>
-          <small>Please check: <a href="${img.src}" target="_blank">${img.alt}</a></small>
-          <p>Try refreshing the page or check the file names.</p>
-        </div>
-      `;
-      
-      console.error('Image load failed:', img.src);
+      // Try the secondary source
+      const galleryItem = document.getElementById(`gallery-item-${imgNum}`);
+      const fallbackImg = galleryItem.querySelectorAll('.gallery-img')[1];
+      fallbackImg.style.display = 'block';
     }
 
-    // [Rest of your JavaScript remains the same]
+    function finalFallback(failedImg, imgNum) {
+      console.error(`All image sources failed (Image ${imgNum})`);
+      
+      // Hide all images
+      const galleryItem = document.getElementById(`gallery-item-${imgNum}`);
+      galleryItem.querySelectorAll('.gallery-img').forEach(img => {
+        img.style.display = 'none';
+      });
+      
+      // Show the fallback div
+      document.getElementById(`fallback-${imgNum}`).style.display = 'flex';
+      
+      // Log detailed error to console
+      console.error('Failed to load:', {
+        imageNumber: imgNum,
+        primarySrc: galleryItem.querySelectorAll('.gallery-img')[0].src,
+        secondarySrc: galleryItem.querySelectorAll('.gallery-img')[1].src,
+        altText: failedImg.alt
+      });
+    }
+
+    // Initialize image checking
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if images loaded properly
+      document.querySelectorAll('.gallery-img').forEach((img, index) => {
+        if (!img.complete || img.naturalHeight === 0) {
+          if (index % 2 === 0) {
+            // Primary image failed
+            fallbackImage(img, Math.floor(index/2) + 1);
+          } else {
+            // Fallback image failed
+            finalFallback(img, Math.floor(index/2) + 1);
+          }
+        }
+      });
+    });
   </script>
 </body>
 </html>
