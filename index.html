@@ -39,6 +39,27 @@
     .quiz p {
       margin: 10px 0 5px;
     }
+    .flashcard {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .flashcard:hover {
+      background-color: #f1f1f1;
+    }
+    .question {
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .answer {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #555;
+    }
   </style>
 </head>
 <body>
@@ -48,7 +69,18 @@
   <section>
     <h2>🔗 Flashcard Deck</h2>
     <p>Topic: <em>Machine Learning Basics</em></p>
-    <p><a href="#">View Flashcards</a></p>
+    <div class="flashcard" onclick="toggleFlashcard(1)">
+      <div class="question">What is the primary goal of supervised learning?</div>
+      <div class="answer" id="answer1" style="display: none;">Predicting outcomes based on labeled data.</div>
+    </div>
+    <div class="flashcard" onclick="toggleFlashcard(2)">
+      <div class="question">Which algorithm is commonly used for classification tasks?</div>
+      <div class="answer" id="answer2" style="display: none;">Decision Tree</div>
+    </div>
+    <div class="flashcard" onclick="toggleFlashcard(3)">
+      <div class="question">In unsupervised learning, the data is:</div>
+      <div class="answer" id="answer3" style="display: none;">Not labeled</div>
+    </div>
   </section>
 
   <section>
@@ -110,67 +142,21 @@
       AI tools have completely changed how I approach teaching. From generating instant lesson summaries to creating custom quizzes, I can now focus more on engaging students creatively. This toolkit not only supports traditional instruction but opens new paths for student-led learning.
     </p>
   </section>
-<section>
-  <h2>🔗 Flashcard Deck</h2>
-  <p>Topic: <em>Machine Learning Basics</em></p>
-  <div class="flashcard" onclick="toggleFlashcard(1)">
-    <div class="question">What is the primary goal of supervised learning?</div>
-    <div class="answer" id="answer1" style="display: none;">Predicting outcomes based on labeled data.</div>
-  </div>
-  
-  <div class="flashcard" onclick="toggleFlashcard(2)">
-    <div class="question">Which algorithm is commonly used for classification tasks?</div>
-    <div class="answer" id="answer2" style="display: none;">Decision Tree</div>
-  </div>
-  
-  <div class="flashcard" onclick="toggleFlashcard(3)">
-    <div class="question">In unsupervised learning, the data is:</div>
-    <div class="answer" id="answer3" style="display: none;">Not labeled</div>
-  </div>
-</section>
-
-<script>
-  function toggleFlashcard(cardId) {
-    var answer = document.getElementById("answer" + cardId);
-    if (answer.style.display === "none") {
-      answer.style.display = "block";
-    } else {
-      answer.style.display = "none";
-    }
-  }
-</script>
-
-<style>
-  .flashcard {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .flashcard:hover {
-    background-color: #f1f1f1;
-  }
-
-  .question {
-    font-weight: bold;
-    font-size: 16px;
-  }
-
-  .answer {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #555;
-  }
-</style>
 
   <section>
     <h2>✨ Optional: AI Chatbot</h2>
     <p><a href="#">Try the AI Chatbot</a></p>
   </section>
 
+  <script>
+    function toggleFlashcard(cardId) {
+      var answer = document.getElementById("answer" + cardId);
+      if (answer.style.display === "none") {
+        answer.style.display = "block";
+      } else {
+        answer.style.display = "none";
+      }
+    }
+  </script>
 </body>
 </html>
