@@ -64,6 +64,23 @@
       font-size: 14px;
       color: #555;
     }
+    #chatbot-container {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    #chatbot-toggle {
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 10px;
+      font-size: 14px;
+      padding: 2px 8px;
+    }
+    #chatbot-toggle:hover {
+      background-color: #1a252f;
+    }
   </style>
 </head>
 <body>
@@ -151,8 +168,17 @@
   </section>
 
   <section>
-    <h2>✨ Optional: AI Chatbot</h2>
-    <iframe src="https://your-chatbot-url.com" width="100%" height="400" title="AI Chatbot"></iframe>
+    <h2>✨ AI Teaching Assistant 
+      <button id="chatbot-toggle">Show Chatbot</button>
+    </h2>
+    <div id="chatbot-container" style="display: none; position: relative; width: 100%; height: 500px;">
+      <iframe 
+        src="https://poe.com/chatgpt" 
+        style="width: 100%; height: 100%; border: 1px solid #ccc; border-radius: 8px;"
+        title="AI Teaching Assistant Chatbot">
+      </iframe>
+    </div>
+    <p><small>Ask me anything about teaching methods, AI tools, or this content!</small></p>
   </section>
 
   <script>
@@ -164,6 +190,20 @@
         answer.style.display = "none";
       }
     }
+
+    // Chatbot toggle functionality
+    document.getElementById('chatbot-toggle').addEventListener('click', function() {
+      const container = document.getElementById('chatbot-container');
+      const button = this;
+      
+      if (container.style.display === 'none') {
+        container.style.display = 'block';
+        button.textContent = 'Hide Chatbot';
+      } else {
+        container.style.display = 'none';
+        button.textContent = 'Show Chatbot';
+      }
+    });
   </script>
 </body>
 </html>
