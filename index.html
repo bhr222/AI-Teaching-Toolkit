@@ -39,6 +39,12 @@
     .gallery img {
       width: 30%;
       min-width: 200px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
     .quiz {
       background: #fff;
@@ -100,6 +106,14 @@
       border: 1px solid #ddd;
       border-radius: 8px;
       overflow: hidden;
+    }
+    .error-placeholder {
+      background-color: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 12px;
     }
   </style>
 </head>
@@ -179,9 +193,9 @@
   <section>
     <h2>🖼️ AI Image Gallery</h2>
     <div class="gallery">
-      <img src="ai-image1.png" alt="AI-generated image showing neural network visualization" />
-      <img src="ai-image2.png" alt="AI-generated image of machine learning process" />
-      <img src="ai-image3.png" alt="AI-generated concept of unsupervised clustering" />
+      <img src="Neural_Network_Cityscape.png" alt="Neural network visualization as a cityscape" />
+      <img src="Mind_of_a_Machine.png" alt="Conceptual AI thought visualization" />
+      <img src="lit-map.png" alt="Literature mapping visualization" />
     </div>
   </section>
 
@@ -215,9 +229,25 @@
       flashcard.style.transform = answer.style.display === 'block' ? 'scale(1.02)' : 'scale(1)';
     }
 
+    // Handle audio errors
     document.querySelector('audio').addEventListener('error', function() {
       console.error('Error loading audio file');
       alert('Having trouble loading the podcast. Please try downloading it instead.');
+    });
+
+    // Make gallery images clickable
+    document.querySelectorAll('.gallery img').forEach(img => {
+      img.addEventListener('click', function() {
+        window.open(this.src, '_blank');
+      });
+    });
+
+    // Handle missing images
+    document.querySelectorAll('img').forEach(img => {
+      img.addEventListener('error', function() {
+        this.alt = 'Image failed to load: ' + this.alt;
+        this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f0f0f0"/><text x="50%" y="50%" font-family="Arial" font-size="10" text-anchor="middle" dominant-baseline="middle" fill="%23999">Image not found</text></svg>';
+      });
     });
   </script>
 </body>
