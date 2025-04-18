@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My AI Teaching Toolkit</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       max-width: 900px;
-      margin: auto;
+      margin: 0 auto;
       padding: 20px;
       line-height: 1.6;
       background-color: #f9f9f9;
@@ -24,89 +24,55 @@
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    iframe, img {
-      max-width: 100%;
-      height: auto;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
     .gallery {
       display: flex;
-      gap: 10px;
       flex-wrap: wrap;
+      gap: 15px;
       justify-content: center;
+      margin: 20px 0;
     }
-    .gallery img {
+    .gallery-item {
       width: 30%;
       min-width: 200px;
-    }
-    .quiz {
-      background: #fff;
-      padding: 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    .quiz p {
-      margin: 10px 0 5px;
-    }
-    .flashcard {
-      background-color: #fff;
-      border: 1px solid #ccc;
-      padding: 20px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .flashcard:hover {
-      background-color: #f1f1f1;
-      transform: translateY(-2px);
-    }
-    .question {
-      font-weight: bold;
-      font-size: 16px;
-    }
-    .answer {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #555;
-      display: none;
-    }
-    audio {
-      width: 100%;
-      margin: 15px 0;
-    }
-    .podcast-meta {
-      background: #f0f8ff;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 15px;
-    }
-    .download-btn {
-      display: inline-block;
-      background: #4CAF50;
-      color: white;
-      padding: 10px 15px;
-      text-decoration: none;
-      border-radius: 5px;
-      margin-top: 10px;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-    .download-btn:hover {
-      background: #45a049;
-    }
-    .chatbot-container {
       border: 1px solid #ddd;
       border-radius: 8px;
       overflow: hidden;
+      transition: transform 0.3s ease;
     }
+    .gallery-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .gallery-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .img-placeholder {
+      background: #f0f0f0;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: 14px;
+    }
+    .error-message {
+      background-color: #ffebee;
+      border-left: 3px solid #f44336;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 14px;
+    }
+    /* [Keep all your other existing styles] */
   </style>
 </head>
 <body>
   <h1>🎓 My AI Teaching Toolkit</h1>
   <p><strong>Project:</strong> AI-Enhanced Digital Resource Hub for Educators</p>
 
+  <!-- Flashcard Section -->
   <section>
     <h2>🔗 Flashcard Deck</h2>
     <p>Topic: <em>Machine Learning Basics</em></p>
@@ -114,112 +80,82 @@
       <div class="question">What is the primary goal of supervised learning?</div>
       <div class="answer" id="answer1">Predicting outcomes based on labeled data.</div>
     </div>
-    <div class="flashcard" onclick="toggleFlashcard(2)">
-      <div class="question">Which algorithm is commonly used for classification tasks?</div>
-      <div class="answer" id="answer2">Decision Tree</div>
-    </div>
-    <div class="flashcard" onclick="toggleFlashcard(3)">
-      <div class="question">In unsupervised learning, the data is:</div>
-      <div class="answer" id="answer3">Not labeled</div>
-    </div>
+    <!-- [Keep other flashcards] -->
   </section>
 
-  <section>
-    <h2>📝 Student Quiz</h2>
-    <div class="quiz">
-      <p><strong>1. What is the primary goal of supervised learning?</strong></p>
-      <ul>
-        <li>a) Discovering hidden patterns in data</li>
-        <li>b) Generating random predictions</li>
-        <li><strong>✅ c) Predicting outcomes based on labeled data</strong></li>
-      </ul>
-
-      <p><strong>2. Which algorithm is commonly used for classification tasks?</strong></p>
-      <ul>
-        <li><strong>✅ a) Decision Tree</strong></li>
-        <li>b) K-Means Clustering</li>
-        <li>c) Apriori Algorithm</li>
-      </ul>
-
-      <p><strong>3. In unsupervised learning, the data is:</strong></p>
-      <ul>
-        <li>a) Always labeled</li>
-        <li><strong>✅ b) Not labeled</strong></li>
-        <li>c) Structured in time series</li>
-      </ul>
-    </div>
-  </section>
-
-  <section>
-    <h2>📊 Exit Ticket Summary</h2>
-    <img src="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/exit-ticket-summary-chart.png" alt="Exit Ticket Insights" />
-    <p><strong>Insights:</strong> 
-      - The lesson was described as <strong>informative</strong> and <strong>knowledgeable</strong> by the majority of students.<br />
-      - Most students (78.3%) rated their understanding of the topic as <strong>4 out of 5</strong>, with 18% rating it a perfect <strong>5</strong>.<br />
-      - A significant number of students (around 90%) indicated that they had no further questions, suggesting a solid grasp of the material.
-    </p>
-  </section>
-
-  <section>
-    <h2>🎙️ Lesson Podcast</h2>
-    <audio controls>
-      <source src="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/podcast.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-    <a href="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/podcast.mp3" download class="download-btn">
-      Download Podcast
-    </a>
-    <div class="podcast-meta">
-      <p><strong>Title:</strong> The Legacy of Maharana Pratap</p>
-      <p><strong>Duration:</strong> 3 minutes</p>
-      <p><strong>Created with:</strong> ChatGPT (script) + ElevenLabs (voice)</p>
-    </div>
-  </section>
-
+  <!-- AI Image Gallery Section -->
   <section>
     <h2>🖼️ AI Image Gallery</h2>
     <div class="gallery">
-      <img src="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/ai-image1.png" alt="AI-generated image showing neural network visualization" />
-      <img src="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/ai-image2.png" alt="AI-generated image of machine learning process" />
-      <img src="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/ai-image3.png" alt="AI-generated concept of unsupervised clustering" />
+      <div class="gallery-item">
+        <img class="gallery-img" 
+             src="https://github.com/bhr222/AI-Teaching-Toolkit/raw/main/Neural_Network_Cityscape.png" 
+             alt="Neural Network Cityscape"
+             onerror="handleImageError(this)">
+        <div class="img-placeholder" style="display:none;">Neural Network Visualization</div>
+      </div>
+      
+      <div class="gallery-item">
+        <img class="gallery-img" 
+             src="https://github.com/bhr222/AI-Teaching-Toolkit/raw/main/Mind_of_a_Machine.png" 
+             alt="Mind of a Machine"
+             onerror="handleImageError(this)">
+        <div class="img-placeholder" style="display:none;">AI Thought Process</div>
+      </div>
+      
+      <div class="gallery-item">
+        <img class="gallery-img" 
+             src="https://github.com/bhr222/AI-Teaching-Toolkit/raw/main/lit-map.png" 
+             alt="Literature Map"
+             onerror="handleImageError(this)">
+        <div class="img-placeholder" style="display:none;">Research Literature Map</div>
+      </div>
     </div>
+    <div id="gallery-errors"></div>
   </section>
 
-  <section>
-    <h2>📚 Literature Mapping Summary</h2>
-    <p><strong>Topic:</strong> Unsupervised Learning in Medical Records</p>
-    <img src="https://raw.githubusercontent.com/bhr222/AI-Teaching-Toolkit/main/lit-map.png" alt="Literature Map" />
-    <p>This literature mapping highlights recent advances in clustering techniques applied to healthcare datasets using tools like ResearchRabbit and Elicit.</p>
-  </section>
-
-  <section>
-    <h2>✍️ Reflective Note</h2>
-    <p>
-      AI tools have completely changed how I approach teaching. From generating instant lesson summaries to creating custom quizzes, I can now focus more on engaging students creatively. This toolkit not only supports traditional instruction but opens new paths for student-led learning.
-    </p>
-  </section>
-
-  <section>
-    <h2>✨ Optional: AI Chatbot</h2>
-    <div class="chatbot-container">
-      <iframe src="https://your-chatbot-url.com" width="100%" height="400" title="AI Chatbot"></iframe>
-    </div>
-  </section>
+  <!-- [Keep all your other sections] -->
 
   <script>
+    // Enhanced Image Error Handling
+    function handleImageError(img) {
+      const container = img.parentElement;
+      const placeholder = container.querySelector('.img-placeholder');
+      const errorContainer = document.getElementById('gallery-errors');
+      
+      // Hide broken image
+      img.style.display = 'none';
+      
+      // Show placeholder
+      placeholder.style.display = 'flex';
+      
+      // Add error message
+      errorContainer.innerHTML += `
+        <div class="error-message">
+          <strong>⚠️ Image failed to load:</strong> ${img.alt}<br>
+          <small>Tried to load from: <a href="${img.src}" target="_blank">${img.src}</a></small>
+        </div>
+      `;
+      
+      console.error('Image load failed:', img.src);
+    }
+
+    // Flashcard Functionality
     function toggleFlashcard(cardId) {
       const answer = document.getElementById(`answer${cardId}`);
       answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
-      
-      // Toggle animation
-      const flashcard = event.currentTarget;
-      flashcard.style.transform = answer.style.display === 'block' ? 'scale(1.02)' : 'scale(1)';
     }
-    
-    // Add event listener for audio error handling
-    document.querySelector('audio').addEventListener('error', function() {
-      console.error('Error loading audio file');
-      alert('Having trouble loading the podcast. Please try downloading it instead.');
+
+    // Initialize with error checking
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Toolkit loaded - checking resources...');
+      
+      // Verify gallery images
+      document.querySelectorAll('.gallery-img').forEach(img => {
+        if (!img.complete || img.naturalHeight === 0) {
+          img.onerror();
+        }
+      });
     });
   </script>
 </body>
