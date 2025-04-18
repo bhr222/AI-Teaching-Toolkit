@@ -166,7 +166,7 @@
 
   <section>
     <h2>📊 Exit Ticket Summary</h2>
-    <img src="exit-ticket-summary-chart.png" alt="Exit Ticket Insights" />
+    <img src="exit-ticket-summary-chart.png" alt="Exit Ticket Insights" onerror="handleImageError(this)" />
     <p><strong>Insights:</strong> 
       - The lesson was described as <strong>informative</strong> and <strong>knowledgeable</strong> by the majority of students.<br />
       - Most students (78.3%) rated their understanding of the topic as <strong>4 out of 5</strong>, with 18% rating it a perfect <strong>5</strong>.<br />
@@ -193,16 +193,16 @@
   <section>
     <h2>🖼️ AI Image Gallery</h2>
     <div class="gallery">
-      <img src="Neural_Network_Cityscape.png" alt="Neural network visualization as a cityscape" />
-      <img src="Mind_of_a_Machine.png" alt="Conceptual AI thought visualization" />
-      <img src="lit-map.png" alt="Literature mapping visualization" />
+      <img src="Neural_Network_Cityscape.png" alt="Neural network visualization as a cityscape" onerror="handleImageError(this)" />
+      <img src="Mind_of_a_Machine.png" alt="Conceptual AI thought visualization" onerror="handleImageError(this)" />
+      <img src="lit-map.png" alt="Literature mapping visualization" onerror="handleImageError(this)" />
     </div>
   </section>
 
   <section>
     <h2>📚 Literature Mapping Summary</h2>
     <p><strong>Topic:</strong> Unsupervised Learning in Medical Records</p>
-    <img src="lit-map.png" alt="Literature Map" />
+    <img src="lit-map.png" alt="Literature Map" onerror="handleImageError(this)" />
     <p>This literature mapping highlights recent advances in clustering techniques applied to healthcare datasets using tools like ResearchRabbit and Elicit.</p>
   </section>
 
@@ -229,6 +229,11 @@
       flashcard.style.transform = answer.style.display === 'block' ? 'scale(1.02)' : 'scale(1)';
     }
 
+    function handleImageError(img) {
+      img.alt = 'Image not found: ' + img.alt;
+      img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f0f0f0"/><text x="50%" y="50%" font-family="Arial" font-size="10" text-anchor="middle" dominant-baseline="middle" fill="%23999">Image not found</text></svg>';
+    }
+
     // Handle audio errors
     document.querySelector('audio').addEventListener('error', function() {
       console.error('Error loading audio file');
@@ -242,12 +247,13 @@
       });
     });
 
-    // Handle missing images
+    // Initialize error handling for all images
     document.querySelectorAll('img').forEach(img => {
-      img.addEventListener('error', function() {
-        this.alt = 'Image failed to load: ' + this.alt;
-        this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f0f0f0"/><text x="50%" y="50%" font-family="Arial" font-size="10" text-anchor="middle" dominant-baseline="middle" fill="%23999">Image not found</text></svg>';
-      });
+      if (!img.onerror) {
+        img.onerror = function() {
+          handleImageError(this);
+        };
+      }
     });
   </script>
 </body>
